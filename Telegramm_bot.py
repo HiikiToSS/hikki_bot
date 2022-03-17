@@ -64,7 +64,7 @@ def query_handler1(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_5':
-        img = open("wallpaperflare.com_wallpaper (4).jpg", "rb")
+        img = open("wallpaperflare.com_wallpaper (5).jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_6':

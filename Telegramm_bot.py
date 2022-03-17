@@ -1,7 +1,7 @@
 import os
-
+import random
 from flask import Flask, request
-
+from telebot import types
 import telebot
 
 TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'

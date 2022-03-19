@@ -1,17 +1,9 @@
-import os
+from telebot import * # импортируем библиотеку для создания бота
 import random
-from flask import Flask, request
-from telebot import types
-import telebot
 
-TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
-bot = telebot.TeleBot(TOKEN)
-server = Flask(__name__)
+rand = "Rem-re-zero.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
-
-
-rand = ["anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"]
-
+bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4') # в скобках должен быть токен
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -52,7 +44,7 @@ def query_handler1(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_2':
-        img = open("anime-rain-cyber.jpg", "rb")
+        img = open("Rem-re-zero.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_3':
@@ -64,13 +56,19 @@ def query_handler1(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_5':
-        img = open("wallpaperflare.com_wallpaper (5).jpg", "rb")
+        img = open("wallpaperflare.com_wallpaper (4).jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_6':
         img = open("wallpaperflare.com_wallpaper (2).jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
+
+@bot.message_handler(func=lambda message: True)
+def echo_message(message):
+    text = message.text
+    # ^^^^^^^^^^^^^^^^^
+    bot.reply_to(message, text)
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -79,6 +77,8 @@ def get_text_messages(message):
         bot.send_sticker(message.chat.id, stik)
         bot.send_message(message.chat.id, 'Привет, я тестовый бот, так что если что-то не работает то это скоро исправят (наверное) \n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
+    elif message.text == '/weather':
+        bot.send_message(message.chat.id, )
     elif message.text == "/Exit":
         bot.send_message(message.from_user.id, "Пока, мой дорогой друг")
     elif message.text == '/Random_numbers':
@@ -97,24 +97,11 @@ def get_text_messages(message):
         randImg = open(randPhoto, 'rb')
         bot.send_photo(message.from_user.id, randImg)
         randImg.close()
+    elif message.text == '/Hehe':
+        img = open('hehe.png','rb')
+        bot.send_photo(message.from_user.id, img)
+        img.close()
     else:
         bot.send_message(message.from_user.id, text = "Я ещё не нейронка чтобы отвечать на любые вопросы, введи /commands чтобы увидеть список команд")
-  
 
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-    json_string = request.get_data().decode('utf-8')
-    update = telebot.types.Update.de_json(json_string)
-    bot.process_new_updates([update])
-    return "!", 200
-
-
-@server.route("/")
-def webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url='https://hikkibotik.herokuapp.com/' + TOKEN)
-    return "!", 200
-
-
-if __name__ == "__main__":
-    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+bot.polling(none_stop=True)

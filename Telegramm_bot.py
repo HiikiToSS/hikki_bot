@@ -1,9 +1,13 @@
-from telebot import * # импортируем библиотеку для создания бота
+import os
 import random
+from flask import Flask, request
+from telebot import types
+import telebot
+TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 
-rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
-
-bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4') # в скобках должен быть токен
+bot = telebot.TeleBot(TOKEN)
+server = Flask(__name__)
+rand = ["anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"]
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -12,7 +16,6 @@ def start_message(message):
     keyboard.add(button1)
     keyboard.add(button2)
     bot.send_message(message.chat.id, text="Выбери тематику фото", reply_markup=keyboard)
-
 @bot.callback_query_handler(func=lambda call: call.data.startswith('first'))
 def query_handler(call):
     bot.answer_callback_query(callback_query_id=call.id) #text='Спасибо за честный ответ!'
@@ -34,8 +37,6 @@ def query_handler(call):
         keyboard.add(button2)
         keyboard.add(button3)
         bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard)
-
-
 @bot.callback_query_handler(func=lambda call: call.data.startswith('second'))
 def query_handler1(call):
     bot.answer_callback_query(callback_query_id=call.id)
@@ -63,7 +64,6 @@ def query_handler1(call):
         img = open("wallpaperflare.com_wallpaper (2).jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
-
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     if message.text == '/start':
@@ -71,8 +71,6 @@ def get_text_messages(message):
         bot.send_sticker(message.chat.id, stik)
         bot.send_message(message.chat.id, 'Привет, я тестовый бот, так что если что-то не работает то это скоро исправят (наверное) \n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
-    elif message.text == '/weather':
-        bot.send_message(message.chat.id, )
     elif message.text == "/Exit":
         bot.send_message(message.from_user.id, "Пока, мой дорогой друг")
     elif message.text == '/Random_numbers':
@@ -91,11 +89,19 @@ def get_text_messages(message):
         randImg = open(randPhoto, 'rb')
         bot.send_photo(message.from_user.id, randImg)
         randImg.close()
-    elif message.text == '/Hehe':
-        img = open('hehe.png','rb')
-        bot.send_photo(message.from_user.id, img)
-        img.close()
     else:
         bot.send_message(message.from_user.id, text = "Я ещё не нейронка чтобы отвечать на любые вопросы, введи /commands чтобы увидеть список команд")
-
-bot.polling(none_stop=True)
+  
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    json_string = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
+    return "!", 200
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://hikkibotik.herokuapp.com/' + TOKEN)
+    return "!", 200
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))

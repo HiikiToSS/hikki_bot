@@ -64,13 +64,6 @@ def query_handler1(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
 
-@bot.message_handler(func=lambda message: True)
-def echo_message(message):
-    if message.text == '/echo':
-    text = message.text
-    # ^^^^^^^^^^^^^^^^^
-    bot.reply_to(message, text)
-
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     if message.text == '/start':

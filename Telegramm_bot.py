@@ -66,6 +66,7 @@ def query_handler1(call):
 
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
+    if message.text == '/echo'
     text = message.text
     # ^^^^^^^^^^^^^^^^^
     bot.reply_to(message, text)

@@ -1,7 +1,7 @@
 from telebot import * # импортируем библиотеку для создания бота
 import random
 
-rand = "Rem-re-zero.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
+rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
 bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4') # в скобках должен быть токен
 @bot.message_handler(commands=['Photos'])
@@ -44,7 +44,7 @@ def query_handler1(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_2':
-        img = open("Rem-re-zero.jpg", "rb")
+        img = open("anime-rain-cyber.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_3':

@@ -12,6 +12,7 @@ bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
+bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4')
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()

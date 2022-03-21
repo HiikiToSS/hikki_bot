@@ -12,7 +12,6 @@ bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
-bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4')
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -24,7 +23,7 @@ def start_message(message):
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('first'))
 def photos1(call):
-    bot.answer_callback_query(callback_query_id=call.id)
+    bot.answer_callback_query(callback_query_id=call.id) #text='Спасибо за честный ответ!'
     if call.data == 'first_1':
         keyboard = types.InlineKeyboardMarkup()
         button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
@@ -86,18 +85,17 @@ def in_which_town(message):
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(place)
     weather = observation.weather
-                    
+        
     temp = weather.temperature("celsius")
     temp_now = temp['temp']
     temp_feels = temp['feels_like']
-
     wind = weather.wind()['speed']
     status = weather.detailed_status
 
     bot.send_message(message.chat.id, "В городе " + str(place).capitalize() + " температура " + str(round(temp_now)) + "°C" + "\n" + 
         "Ощущается как " + str(round(temp_feels)) + "°C" + "\n" +
-        "Скорость ветра " + str(round(wind)) + "м/с" + "\n" + 
-        "Описание " + str(status))
+        "Скорость ветра " + str(round(wind)) + " м/с" + "\n" + 
+        "Описание: " + str(status))
 
 place = ''
 
@@ -118,7 +116,7 @@ def commands(message):
     elif message.text == '/Anime' or message.text == '/anime memes' or message.text == '/аниме':
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы - аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/weather \n /Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit')
+        bot.send_message(message.from_user.id, '/Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit') #сделай ветвление после нажатия space_photos сделай 3 кнопки и пусть в них будет фото 1\2\3
     elif message.text == '/Hello' or message.text ==  '/Hello' or message.text == '/Hi' or message.text == '/hi':
         bot.send_message(message.from_user.id, 'Привет!')
     elif message.text == '/Random_photo':

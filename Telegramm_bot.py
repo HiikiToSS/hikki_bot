@@ -114,7 +114,7 @@ def commands(message):
     elif message.text == '/Anime' or message.text == '/anime memes' or message.text == '/аниме':
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы - аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit') #сделай ветвление после нажатия space_photos сделай 3 кнопки и пусть в них будет фото 1\2\3
+        bot.send_message(message.from_user.id, '/weather \n /Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit')
     elif message.text == '/Hello' or message.text ==  '/Hello' or message.text == '/Hi' or message.text == '/hi':
         bot.send_message(message.from_user.id, 'Привет!')
     elif message.text == '/Random_photo':

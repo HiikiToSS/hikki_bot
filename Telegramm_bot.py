@@ -72,8 +72,9 @@ def photos2(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
 
-@bot.message_handler(commands=['weather'])
 place = ''
+        
+@bot.message_handler(commands=['weather'])
 def get_weather(message):
     bot.send_message(message.from_user.id, 'Введи название города')
     bot.register_next_step_handler(message, in_which_town)

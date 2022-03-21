@@ -1,7 +1,7 @@
 import os
 import random
 from flask import Flask, request
-from telebot import *
+from telebot import types
 from pyowm import OWM
 from pyowm.utils.config import get_default_config
 import telebot

@@ -9,7 +9,6 @@ bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
-bot = telebot.TeleBot('5146045260:AAEoPSXOGulJbu3xA4qwGgrDUPFyxxJ0V0I')
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -103,7 +102,7 @@ def commands(message):
     if message.text == '/start':
         stik = open('Илон и шампусико.webp', 'rb')
         bot.send_sticker(message.chat.id, stik)
-        bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши этой ленивой заднице(@HiikiToSS) ато вдруг и не исправит\n Введи \" /commands\" чтобы увидеть список доступных команд')
+        bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши (@HiikiToSS)\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
     elif message.text == "/Exit":
         bot.send_message(message.from_user.id, "Пока, мой дорогой друг")

@@ -7,7 +7,9 @@ TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
-rand = ["anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"]
+rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
+
+bot = telebot.TeleBot('5146045260:AAEoPSXOGulJbu3xA4qwGgrDUPFyxxJ0V0I')
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -16,9 +18,10 @@ def start_message(message):
     keyboard.add(button1)
     keyboard.add(button2)
     bot.send_message(message.chat.id, text="Выбери тематику фото", reply_markup=keyboard)
+
 @bot.callback_query_handler(func=lambda call: call.data.startswith('first'))
-def query_handler(call):
-    bot.answer_callback_query(callback_query_id=call.id) #text='Спасибо за честный ответ!'
+def photos1(call):
+    bot.answer_callback_query(callback_query_id=call.id)
     if call.data == 'first_1':
         keyboard = types.InlineKeyboardMarkup()
         button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
@@ -37,8 +40,10 @@ def query_handler(call):
         keyboard.add(button2)
         keyboard.add(button3)
         bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard)
+
+
 @bot.callback_query_handler(func=lambda call: call.data.startswith('second'))
-def query_handler1(call):
+def photos2(call):
     bot.answer_callback_query(callback_query_id=call.id)
     if call.data == 'second_1':
         img = open("anime girl.jpg", "rb")
@@ -64,12 +69,41 @@ def query_handler1(call):
         img = open("wallpaperflare.com_wallpaper (2).jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
+
+@bot.message_handler(commands=['weather'])
+def get_weather(message):
+    bot.send_message(message.from_user.id, 'Введи название города')
+    bot.register_next_step_handler(message, in_which_town)
+def in_which_town(message):
+    global place
+    place = str(message.text)
+    config_dict = get_default_config()
+    config_dict['language'] = 'ru'
+    owm = OWM('1af6d94aef9fadbb7f4fa20c8cdbb9a9', config_dict)
+    mgr = owm.weather_manager()
+    observation = mgr.weather_at_place(place)
+    weather = observation.weather
+                    
+    temp = weather.temperature("celsius")
+    temp_now = temp['temp']
+    temp_feels = temp['feels_like']
+
+    wind = weather.wind()['speed']
+    status = weather.detailed_status
+
+    bot.send_message(message.chat.id, "В городе " + str(place).capitalize() + " температура " + str(round(temp_now)) + "°C" + "\n" + 
+        "Ощущается как " + str(round(temp_feels)) + "°C" + "\n" +
+        "Скорость ветра " + str(round(wind)) + "м/с" + "\n" + 
+        "Описание " + str(status))
+
+place = ''
+
 @bot.message_handler(content_types=['text'])
-def get_text_messages(message):
+def commands(message):
     if message.text == '/start':
         stik = open('Илон и шампусико.webp', 'rb')
         bot.send_sticker(message.chat.id, stik)
-        bot.send_message(message.chat.id, 'Привет, я тестовый бот, так что если что-то не работает то это скоро исправят (наверное) \n Введи \" /commands\" чтобы увидеть список доступных команд')
+        bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши этой ленивой заднице(@HiikiToSS) ато вдруг и не исправит\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
     elif message.text == "/Exit":
         bot.send_message(message.from_user.id, "Пока, мой дорогой друг")

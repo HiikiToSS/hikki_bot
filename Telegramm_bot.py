@@ -2,7 +2,10 @@ import os
 import random
 from flask import Flask, request
 from telebot import types
+from pyowm import OWM
+from pyowm.utils.config import get_default_config
 import telebot
+
 TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 
 bot = telebot.TeleBot(TOKEN)

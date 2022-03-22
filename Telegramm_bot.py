@@ -174,7 +174,7 @@ def commands(message):
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы')
         bot.send_message(message.from_user.id, 'аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit')
+        bot.send_message(message.from_user.id, '/Random_numbers \n /Cats \n /Anime \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':
         randPhoto = random.choice(rand)
         randImg = open(randPhoto, 'rb')

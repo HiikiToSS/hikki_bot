@@ -6,7 +6,9 @@ from pyowm import OWM
 from pyowm.utils.config import get_default_config
 import telebot
 
-bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4')
+TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
+
+bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 rand = ["anime-rain-cyber.jpg","space1.jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "space2.jpg", 'nature1.jpg', 'nature2.jpg', 'nature3.jpg', 'nature4.jpg', 'nature5.jpg', 'planet_brake.jpg', 'wallpaperflare.com_wallpaper (3).jpg', 'sword_demon.jpg', 'sword_demon.jpg', 'little_princ.jpg']

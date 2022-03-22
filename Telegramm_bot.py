@@ -6,49 +6,71 @@ from pyowm import OWM
 from pyowm.utils.config import get_default_config
 import telebot
 
-TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
-
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot('5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4')
 server = Flask(__name__)
-rand = "anime-rain-cyber.jpg","wallpaperflare.com_wallpaper (1).jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "wallpaperflare.com_wallpaper (4).jpg"
 
+rand = ["anime-rain-cyber.jpg","space1.jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "space2.jpg", 'nature1.jpg', 'nature2.jpg', 'nature3.jpg', 'nature4.jpg', 'nature5.jpg', 'planet_brake.jpg', 'wallpaperflare.com_wallpaper (3).jpg', 'sword_demon.jpg', 'sword_demon.jpg', 'little_princ.jpg']
+bot = telebot.TeleBot('5146045260:AAEoPSXOGulJbu3xA4qwGgrDUPFyxxJ0V0I')
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
     button1 = types.InlineKeyboardButton(text='Аниме', callback_data='first_1')
     button2 = types.InlineKeyboardButton(text='Космос', callback_data='first_2')
+    button3 = types.InlineKeyboardButton(text='Природа', callback_data='first_3')
     keyboard.add(button1)
     keyboard.add(button2)
+    keyboard.add(button3)
     bot.send_message(message.chat.id, text="Выбери тематику фото", reply_markup=keyboard)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('first'))
 def photos1(call):
-    bot.answer_callback_query(callback_query_id=call.id) #text='Спасибо за честный ответ!'
+    bot.answer_callback_query(callback_query_id=call.id)
     if call.data == 'first_1':
         keyboard = types.InlineKeyboardMarkup()
         button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
         button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_2')
         button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_3')
+        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_4')
+        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_5')
         keyboard.add(button1)
         keyboard.add(button2)
         keyboard.add(button3)
+        keyboard.add(button4)
+        keyboard.add(button5)
         bot.send_message(call.message.chat.id, text="Выбери фото (Аниме)", reply_markup=keyboard)
     elif call.data == 'first_2':
         keyboard = types.InlineKeyboardMarkup()
-        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_4')
-        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_5')
-        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_6')
+        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_6')
+        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_7')
+        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_8')
+        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_9')
+        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_10')
         keyboard.add(button1)
         keyboard.add(button2)
         keyboard.add(button3)
+        keyboard.add(button4)
+        keyboard.add(button5)
         bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard)
+    elif call.data == 'first_3':
+        keyboard = types.InlineKeyboardMarkup()
+        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_11')
+        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_12')
+        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_13')
+        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_14')
+        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_15')
+        keyboard.add(button1)
+        keyboard.add(button2)
+        keyboard.add(button3)
+        keyboard.add(button4)
+        keyboard.add(button5)
+        bot.send_message(call.message.chat.id, text="Выбери фото (Природа)", reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('second'))
 def photos2(call):
     bot.answer_callback_query(callback_query_id=call.id)
     if call.data == 'second_1':
-        img = open("anime girl.jpg", "rb")
+        img = open("sword_demon.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_2':
@@ -60,20 +82,55 @@ def photos2(call):
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_4':
-        img = open("wallpaperflare.com_wallpaper (3).jpg", "rb")
+        img = open("sword_demon_purple.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_5':
-        img = open("wallpaperflare.com_wallpaper (4).jpg", "rb")
+        img = open("anime girl.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
     elif call.data == 'second_6':
-        img = open("wallpaperflare.com_wallpaper (2).jpg", "rb")
+        img = open("space1.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_7':
+        img = open("wallpaperflare.com_wallpaper (3).jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_8':
+        img = open("space2.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_9':
+        img = open("planet_brake.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_10':
+        img = open("little_princ.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_11':
+        img = open("nature1.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_12':
+        img = open("nature2.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_13':
+        img = open("nature3.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_14':
+        img = open("nature4.jpg", "rb")
+        bot.send_photo(call.message.chat.id, img)
+        img.close()
+    elif call.data == 'second_15':
+        img = open("nature5.jpg", "rb")
         bot.send_photo(call.message.chat.id, img)
         img.close()
 
 place = ''
-        
 @bot.message_handler(commands=['weather'])
 def get_weather(message):
     bot.send_message(message.from_user.id, 'Введи название города')
@@ -87,7 +144,7 @@ def in_which_town(message):
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(place)
     weather = observation.weather
-        
+
     temp = weather.temperature("celsius")
     temp_now = temp['temp']
     temp_feels = temp['feels_like']
@@ -106,19 +163,17 @@ def commands(message):
         bot.send_sticker(message.chat.id, stik)
         bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши (@HiikiToSS)\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
-    elif message.text == "/Exit":
-        bot.send_message(message.from_user.id, "Пока, мой дорогой друг")
     elif message.text == '/Random_numbers':
         rand0_100 = random.randint(0,100)
         bot.send_message(message.from_user.id, rand0_100)
     elif message.text == '/Cats':
-        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=мемы+с+котиками - мемы с котиками, как ты и хотел')
+        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=мемы+с+котиками')
+        bot.send_message(message.from_user.id, 'мемы с котиками, как ты и хотел')
     elif message.text == '/Anime' or message.text == '/anime memes' or message.text == '/аниме':
-        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы - аниме приколы')
+        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы')
+        bot.send_message(message.from_user.id, 'аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/weather \n /Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit') #сделай ветвление после нажатия space_photos сделай 3 кнопки и пусть в них будет фото 1\2\3
-    elif message.text == '/Hello' or message.text ==  '/Hello' or message.text == '/Hi' or message.text == '/hi':
-        bot.send_message(message.from_user.id, 'Привет!')
+        bot.send_message(message.from_user.id, '/Random_numbers \n /Cats \n /Anime \n /Hello \n /Photos \n /Random_photo \n /Exit')
     elif message.text == '/Random_photo':
         randPhoto = random.choice(rand)
         randImg = open(randPhoto, 'rb')

@@ -6,7 +6,7 @@ from pyowm import OWM
 from pyowm.utils.config import get_default_config
 import telebot
 
-TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
+TOKEN = '5146045260:AAEoPSXOGulJbu3xA4qwGgrDUPFyxxJ0V0I'
 
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)

@@ -88,7 +88,7 @@ def photos2(call):
     rand = d.values()
 
 place = ''
-@bot.message_handler(commands=['weather'])
+@bot.message_handler(commands=['Weather'])
 def get_weather(message):
     bot.send_message(message.from_user.id, 'Введи название города')
     bot.register_next_step_handler(message, in_which_town)
@@ -127,7 +127,7 @@ def commands(message):
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы')
         bot.send_message(message.from_user.id, 'аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/weather \n /Cats \n /Anime \n /Photos \n /Random_photo')
+        bot.send_message(message.from_user.id, '/Weather \n /Cats \n /Anime \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':
         randPhoto = random.choice(rand)
         randImg = open(randPhoto, 'rb')

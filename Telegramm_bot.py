@@ -164,9 +164,6 @@ def commands(message):
         bot.send_sticker(message.chat.id, stik)
         bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши (@HiikiToSS)\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
-    elif message.text == '/Random_numbers':
-        rand0_100 = random.randint(0,100)
-        bot.send_message(message.from_user.id, rand0_100)
     elif message.text == '/Cats':
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=мемы+с+котиками')
         bot.send_message(message.from_user.id, 'мемы с котиками, как ты и хотел')
@@ -174,7 +171,7 @@ def commands(message):
         bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы')
         bot.send_message(message.from_user.id, 'аниме приколы')
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/weather \n /Random_numbers \n /Cats \n /Anime \n /Photos \n /Random_photo')
+        bot.send_message(message.from_user.id, '/weather \n /Cats \n /Anime \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':
         randPhoto = random.choice(rand)
         randImg = open(randPhoto, 'rb')

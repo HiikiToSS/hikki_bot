@@ -10,7 +10,12 @@ TOKEN = '262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-rand = ["anime-rain-cyber.jpg","space1.jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "space2.jpg", 'nature1.jpg', 'nature2.jpg', 'nature3.jpg', 'nature4.jpg', 'nature5.jpg', 'planet_brake.jpg', 'wallpaperflare.com_wallpaper (3).jpg', 'sword_demon.jpg', 'sword_demon.jpg', 'little_princ.jpg']
+d = {"second_1": "sword_demon.jpg", "second_2": "anime-rain-cyber.jpg", "second_3": "wallpaperflare.com_wallpaper (1).jpg", "second_4": "sword_demon_purple.jpg", "second_5": "anime girl.jpg", "second_6": "space1.jpg",
+    "second_7": "wallpaperflare.com_wallpaper (3).jpg", "second_8": "space2.jpg", "second_9": "planet_brake.jpg", "second_10": "little_princ.jpg",
+    "second_11": "nature1.jpg", "second_12": "nature2.jpg", "second_13": "nature3.jpg", "second_14": "nature4.jpg", "second_15": "nature5.jpg", } 
+rand = ["anime-rain-cyber.jpg","space1.jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "space2.jpg", 'nature1.jpg', 'nature2.jpg',
+'nature3.jpg', 'nature4.jpg', 'nature5.jpg', 'planet_brake.jpg', 'wallpaperflare.com_wallpaper (3).jpg', 'sword_demon.jpg', 'sword_demon.jpg', 'little_princ.jpg']
+
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
     keyboard = types.InlineKeyboardMarkup()
@@ -65,70 +70,22 @@ def photos1(call):
         keyboard.add(button5)
         bot.send_message(call.message.chat.id, text="Выбери фото (Природа)", reply_markup=keyboard)
 
+amount = 0
+photo_id = 0
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('second'))
 def photos2(call):
     bot.answer_callback_query(callback_query_id=call.id)
-    if call.data == 'second_1':
-        img = open("sword_demon.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_2':
-        img = open("anime-rain-cyber.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_3':
-        img = open("wallpaperflare.com_wallpaper (1).jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_4':
-        img = open("sword_demon_purple.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_5':
-        img = open("anime girl.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_6':
-        img = open("space1.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_7':
-        img = open("wallpaperflare.com_wallpaper (3).jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_8':
-        img = open("space2.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_9':
-        img = open("planet_brake.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_10':
-        img = open("little_princ.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_11':
-        img = open("nature1.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_12':
-        img = open("nature2.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_13':
-        img = open("nature3.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_14':
-        img = open("nature4.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
-    elif call.data == 'second_15':
-        img = open("nature5.jpg", "rb")
-        bot.send_photo(call.message.chat.id, img)
-        img.close()
+    global amount
+    global rand
+    global photo_id
+    if amount > 0:
+        bot.delete_message(call.message.chat.id, photo_id)
+    amount +=1
+    img = open(d[call.data], "rb")
+    photo_id =bot.send_photo(call.message.chat.id, img).message_id
+    img.close()
+    rand = d.values()
 
 place = ''
 @bot.message_handler(commands=['weather'])

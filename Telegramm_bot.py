@@ -10,11 +10,14 @@ TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
-d = {"second_1": "sword_demon.jpg", "second_2": "anime-rain-cyber.jpg", "second_3": "wallpaperflare.com_wallpaper (1).jpg", "second_4": "sword_demon_purple.jpg", "second_5": "anime girl.jpg", "second_6": "space1.jpg",
+dict = {"second_1": "sword_demon.jpg", "second_2": "anime-rain-cyber.jpg", "second_3": "wallpaperflare.com_wallpaper (1).jpg", "second_4": "sword_demon_purple.jpg", "second_5": "anime girl.jpg", "second_6": "space1.jpg",
     "second_7": "wallpaperflare.com_wallpaper (3).jpg", "second_8": "space2.jpg", "second_9": "planet_brake.jpg", "second_10": "little_princ.jpg",
     "second_11": "nature1.jpg", "second_12": "nature2.jpg", "second_13": "nature3.jpg", "second_14": "nature4.jpg", "second_15": "nature5.jpg", } 
 rand = ["anime-rain-cyber.jpg","space1.jpg", "anime girl.jpg", "wallpaperflare.com_wallpaper (1).jpg", "space2.jpg", 'nature1.jpg', 'nature2.jpg',
 'nature3.jpg', 'nature4.jpg', 'nature5.jpg', 'planet_brake.jpg', 'wallpaperflare.com_wallpaper (3).jpg', 'sword_demon.jpg', 'sword_demon.jpg', 'little_princ.jpg']
+
+photo_id = 0
+photo_num_choice_id = 0
 
 @bot.message_handler(commands=['Photos'])
 def start_message(message):
@@ -29,63 +32,107 @@ def start_message(message):
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('first'))
 def photos1(call):
+    global photo_num_choice_id
     bot.answer_callback_query(callback_query_id=call.id)
-    if call.data == 'first_1':
-        keyboard = types.InlineKeyboardMarkup()
-        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
-        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_2')
-        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_3')
-        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_4')
-        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_5')
-        keyboard.add(button1)
-        keyboard.add(button2)
-        keyboard.add(button3)
-        keyboard.add(button4)
-        keyboard.add(button5)
-        bot.send_message(call.message.chat.id, text="Выбери фото (Аниме)", reply_markup=keyboard)
-    elif call.data == 'first_2':
-        keyboard = types.InlineKeyboardMarkup()
-        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_6')
-        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_7')
-        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_8')
-        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_9')
-        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_10')
-        keyboard.add(button1)
-        keyboard.add(button2)
-        keyboard.add(button3)
-        keyboard.add(button4)
-        keyboard.add(button5)
-        bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard)
-    elif call.data == 'first_3':
-        keyboard = types.InlineKeyboardMarkup()
-        button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_11')
-        button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_12')
-        button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_13')
-        button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_14')
-        button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_15')
-        keyboard.add(button1)
-        keyboard.add(button2)
-        keyboard.add(button3)
-        keyboard.add(button4)
-        keyboard.add(button5)
-        bot.send_message(call.message.chat.id, text="Выбери фото (Природа)", reply_markup=keyboard)
-
-amount = 0
-photo_id = 0
+    try:
+        bot.delete_message(call.message.chat.id, photo_num_choice_id)
+        bot.delete_message(call.message.chat.id, photo_id)
+        if call.data == 'first_1':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_2')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_3')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_4')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_5')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Аниме)", reply_markup=keyboard).message_id
+        elif call.data == 'first_2':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_6')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_7')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_8')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_9')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_10')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard).message_id
+        elif call.data == 'first_3':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_11')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_12')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_13')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_14')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_15')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Природа)", reply_markup=keyboard).message_id
+    except:
+        if call.data == 'first_1':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_1')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_2')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_3')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_4')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_5')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Аниме)", reply_markup=keyboard).message_id
+        elif call.data == 'first_2':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_6')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_7')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_8')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_9')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_10')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Космос)", reply_markup=keyboard).message_id
+        elif call.data == 'first_3':
+            keyboard = types.InlineKeyboardMarkup()
+            button1 = types.InlineKeyboardButton(text='Фото 1', callback_data='second_11')
+            button2 = types.InlineKeyboardButton(text='Фото 2', callback_data='second_12')
+            button3 = types.InlineKeyboardButton(text='Фото 3', callback_data='second_13')
+            button4 = types.InlineKeyboardButton(text='Фото 4', callback_data='second_14')
+            button5 = types.InlineKeyboardButton(text='Фото 5', callback_data='second_15')
+            keyboard.add(button1)
+            keyboard.add(button2)
+            keyboard.add(button3)
+            keyboard.add(button4)
+            keyboard.add(button5)
+            photo_num_choice_id = bot.send_message(call.message.chat.id, text="Выбери фото (Природа)", reply_markup=keyboard).message_id
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('second'))
 def photos2(call):
     bot.answer_callback_query(callback_query_id=call.id)
-    global amount
     global rand
     global photo_id
-    if amount > 0:
+    try:
         bot.delete_message(call.message.chat.id, photo_id)
-    amount +=1
-    img = open(d[call.data], "rb")
-    photo_id =bot.send_photo(call.message.chat.id, img).message_id
-    img.close()
-    rand = d.values()
+        img = open(dict[call.data], "rb")
+        photo_id = bot.send_photo(call.message.chat.id, img).message_id
+        img.close()
+        rand = dict.values()
+    except:
+        img = open(dict[call.data], "rb")
+        photo_id = bot.send_photo(call.message.chat.id, img).message_id
+        img.close()
+        rand = dict.values()
 
 place = ''
 @bot.message_handler(commands=['Weather'])
@@ -120,12 +167,6 @@ def commands(message):
         bot.send_sticker(message.chat.id, stik)
         bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши (@HiikiToSS)\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
-    elif message.text == '/Cats':
-        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=мемы+с+котиками')
-        bot.send_message(message.from_user.id, 'мемы с котиками, как ты и хотел')
-    elif message.text == '/Anime' or message.text == '/anime memes' or message.text == '/аниме':
-        bot.send_message(message.from_user.id, 'https://www.youtube.com/results?search_query=аниме+приколы')
-        bot.send_message(message.from_user.id, 'аниме приколы')
     elif message.text == '/commands':
         bot.send_message(message.from_user.id, '/Weather \n /Cats \n /Anime \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':

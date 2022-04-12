@@ -168,7 +168,7 @@ def commands(message):
         bot.send_message(message.chat.id, 'Привет, я хотя уже и не тестовый бот но всё ещё нахожусь в разработке так что если будут какие-то баги то их наверное скоро исправит мой разраб, но лучше напиши (@HiikiToSS)\n Введи \" /commands\" чтобы увидеть список доступных команд')
         stik.close()
     elif message.text == '/commands':
-        bot.send_message(message.from_user.id, '/Weather \n /Cats \n /Anime \n /Photos \n /Random_photo')
+        bot.send_message(message.from_user.id, '/Weather \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':
         randPhoto = random.choice(rand)
         randImg = open(randPhoto, 'rb')

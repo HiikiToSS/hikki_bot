@@ -161,7 +161,7 @@ def in_which_town(message):
             "Скорость ветра " + str(round(wind)) + " м/с" + "\n" + 
             "Описание: " + str(status))
     except:
-       print('Город с таким названием не найден')
+       bot.send_message(message.from_user,id, 'Город с таким названием не найден')
 
 @bot.message_handler(content_types=['text'])
 def commands(message):

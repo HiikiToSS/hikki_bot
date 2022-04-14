@@ -141,24 +141,27 @@ def get_weather(message):
     bot.register_next_step_handler(message, in_which_town)
 def in_which_town(message):
     global place
-    place = str(message.text)
-    config_dict = get_default_config()
-    config_dict['language'] = 'ru'
-    owm = OWM('1af6d94aef9fadbb7f4fa20c8cdbb9a9', config_dict)
-    mgr = owm.weather_manager()
-    observation = mgr.weather_at_place(place)
-    weather = observation.weather
+    try:
+        place = str(message.text)
+        config_dict = get_default_config()
+        config_dict['language'] = 'ru'
+        owm = OWM('1af6d94aef9fadbb7f4fa20c8cdbb9a9', config_dict)
+        mgr = owm.weather_manager()
+        observation = mgr.weather_at_place(place)
+        weather = observation.weather
 
-    temp = weather.temperature("celsius")
-    temp_now = temp['temp']
-    temp_feels = temp['feels_like']
-    wind = weather.wind()['speed']
-    status = weather.detailed_status
+        temp = weather.temperature("celsius")
+        temp_now = temp['temp']
+        temp_feels = temp['feels_like']
+        wind = weather.wind()['speed']
+        status = weather.detailed_status
 
-    bot.send_message(message.chat.id, "В городе " + str(place).capitalize() + " температура " + str(round(temp_now)) + "°C" + "\n" + 
-        "Ощущается как " + str(round(temp_feels)) + "°C" + "\n" +
-        "Скорость ветра " + str(round(wind)) + " м/с" + "\n" + 
-        "Описание: " + str(status))
+        bot.send_message(message.chat.id, "В городе " + str(place).capitalize() + " температура " + str(round(temp_now)) + "°C" + "\n" + 
+            "Ощущается как " + str(round(temp_feels)) + "°C" + "\n" +
+            "Скорость ветра " + str(round(wind)) + " м/с" + "\n" + 
+            "Описание: " + str(status))
+    except:
+       print('Город с таким названием не найден')
 
 @bot.message_handler(content_types=['text'])
 def commands(message):

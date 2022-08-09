@@ -8,6 +8,11 @@ from pyowm.utils.config import get_default_config
 import telebot
 
 TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
+CONNECTION_STRING = "mongodb+srv://hikki_bd:Ares_0377@cluster0.yv7ke.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+client = MongoClient(CONNECTION_STRING)
+
+db = client['db_for_the_oldest_tg_bot'] # название базы данных
+collection = db['message_log'] # название коллекции
 
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
@@ -117,6 +122,11 @@ def in_which_town(message):
 
 @bot.message_handler(content_types=['text'])
 def commands(message):
+    mess = {
+        'id' : message.from_user.id,
+        'сообщение' : message.text
+    }
+    collection.insert_one(mess)
     if message.text == '/start':
         stik = open('Илон и шампусико.webp', 'rb')
         bot.send_sticker(message.chat.id, stik)

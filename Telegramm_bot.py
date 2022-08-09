@@ -6,6 +6,8 @@ from telebot import types
 from pyowm import OWM
 from pyowm.utils.config import get_default_config
 import telebot
+import pymongo
+from pymongo import MongoClient
 
 TOKEN = '5262735741:AAHL1PTf8GnPWXCFlgNp1Dngrei-RynBzB4'
 CONNECTION_STRING = "mongodb+srv://hikki_bd:Ares_0377@cluster0.yv7ke.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"

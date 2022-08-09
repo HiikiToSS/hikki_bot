@@ -142,6 +142,8 @@ def commands(message):
         'start_call' : 0
         }
         collection.insert_one(user)
+    elif message.text == 'иди нахуй' or message.text == 'Иди нахуй' or message.text == 'пошёл нахуй' or message.text == 'Пошёл нахуй':
+        bot.send_message(message.chat.id, 'Сам иди)')
     elif message.text == '/commands':
         bot.send_message(message.from_user.id, '/Weather \n /Photos \n /Random_photo')
     elif message.text == '/Random_photo':
